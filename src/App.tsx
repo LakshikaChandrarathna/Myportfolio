@@ -157,7 +157,7 @@ const PortfolioPage = () => {
       </header>
 
       {/* 2. HERO SECTION */}
-      <section className="relative overflow-hidden border-b border-slate-800/80 py-16 lg:py-24 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(56,189,248,0.12),rgba(255,255,255,0))]">
+      <section className="relative overflow-hidden border-b border-slate-800/80 py-16 lg:py-12 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(56,189,248,0.12),rgba(255,255,255,0))]">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
           {/* Left Side Content (7 Columns) */}
@@ -174,7 +174,7 @@ const PortfolioPage = () => {
               </div>
 
               <div className="space-y-2">
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white font-sans leading-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight text-white font-sans leading-tight">
                   {config.name}
                 </h1>
                 <AnimatedTitle text={config.title} />
@@ -188,7 +188,7 @@ const PortfolioPage = () => {
 
             {/* Terminal Window Mockup */}
             <div className="bg-[#0b0e17] border border-slate-800/90 rounded-2xl overflow-hidden shadow-2xl max-w-xl">
-              {/* <div className="bg-slate-900/80 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
+               <div className="bg-slate-900/80 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
                   <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
@@ -196,15 +196,15 @@ const PortfolioPage = () => {
                 </div>
                 <div className="text-xs font-mono text-slate-500">developer.json</div>
                 <div className="w-10"></div>
-              </div> */}
+              </div> 
 
-              {/* <div className="p-4 font-mono text-xs leading-relaxed text-slate-300 overflow-x-auto">
+               <div className="p-4 font-mono text-xs leading-relaxed text-slate-300 overflow-x-auto">
                 <span className="text-purple-400">const</span> <span className="text-yellow-300">developer</span> <span className="text-cyan-400">=</span> &#123;<br />
                 &nbsp;&nbsp;<span className="text-cyan-300">name</span>: <span className="text-emerald-300">"{config.name}"</span>,<br />
                 &nbsp;&nbsp;<span className="text-cyan-300">role</span>: <span className="text-emerald-300">"{config.title}"</span>,<br />
                 &nbsp;&nbsp;<span className="text-cyan-300">coreStack</span>: [<span className="text-emerald-300">"React"</span>, <span className="text-emerald-300">"Laravel"</span>, <span className="text-emerald-300">"JavaScript"</span>, <span className="text-emerald-300">"MySQL"</span>]<br />
                 &#125;;
-              </div> */}
+              </div> 
 
               <div className="bg-slate-900/40 border-t border-slate-800/80 p-3 grid grid-cols-3 gap-3 text-center">
                 {config.hero.stats.map((stat, i) => (
