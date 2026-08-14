@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // === Configuration ===
 const config = {
   name: "Udari Lakshika",
   title: "Full-Stack Software Developer",
+  status: "Available for New Opportunities",
   email: "udarilakshika12@gmail.com",
   linkedin: "https://www.linkedin.com/in/lakshika-chandrarathna-6821242a3",
   github: "https://github.com/LakshikaChandrarathna",
   hero: {
-    heading: "From Sketch to Scale - I Build the Web You Imagine",
-    successRate: "100% Success Rate",
-    projectsCompleted: "10+",
-    yearsExperience: "3+",
-    aboutQuick: "I'm Udari Lakshika, a developer who loves blending creative frontends with scalable backends to deliver meaningful digital products.",
+    tagline: "Architecting End-to-End Digital Experiences",
+    aboutQuick: "I build high-performance, scalable web applications with intuitive frontends and robust backends.",
     image: "https://via.placeholder.com/600x600?text=Udari+Lakshika",
+    stats: [
+      { label: "Completed Projects", value: "10+" },
+      { label: "Experience", value: "1+ Years" },
+      // { label: "Client Satisfaction", value: "100%" }
+    ]
   },
   about: {
     detailed: [
@@ -88,114 +91,193 @@ const config = {
     }
   ]
 };
-// ====================================================
+
+// === Typewriter Animation Component ===
+const AnimatedTitle = ({ text }: { text: string }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+  const typingSpeed = isDeleting ? 40 : 80;
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const fullText = text;
+      setDisplayText(
+        isDeleting
+          ? fullText.substring(0, displayText.length - 1)
+          : fullText.substring(0, displayText.length + 1)
+      );
+
+      if (!isDeleting && displayText === fullText) {
+        setTimeout(() => setIsDeleting(true), 2500);
+      } else if (isDeleting && displayText === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+      }
+    };
+
+    const timer = setTimeout(handleTyping, typingSpeed);
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, loopNum, text, typingSpeed]);
+
+  return (
+    <p className="text-base sm:text-lg font-mono text-cyan-400 font-semibold tracking-wide flex items-center gap-1.5 min-h-[28px]">
+      <span>{displayText}</span>
+      <span className="w-2 h-4 bg-cyan-400 inline-block animate-pulse rounded-sm"></span>
+    </p>
+  );
+};
 
 const PortfolioPage = () => {
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-orange-600/30">
+    <div className="min-h-screen bg-[#07090e] text-slate-100 font-sans selection:bg-cyan-500/30 antialiased">
       
       {/* 1. Header / Navbar */}
-      <header className="border-b border-gray-800/30 sticky top-0 bg-black/80 backdrop-blur-sm z-50">
+      <header className="border-b border-slate-800/80 sticky top-0 bg-[#07090e]/90 backdrop-blur-md z-50">
         <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="text-2xl font-bold tracking-tighter text-white">
-            U<span className="text-orange-600">.</span>
+          <div className="text-xl font-mono font-bold tracking-tight text-white flex items-center gap-1">
+            <span className="text-cyan-400">&lt;</span>
+            <span>Udari.dev</span>
+            <span className="text-cyan-400">/&gt;</span>
           </div>
-          <div className="flex items-center gap-6 text-sm font-medium text-gray-300">
-            {['Home', 'Projects', 'About Me', 'Contact'].map(link => (
-              <a key={link} href="#" className="hover:text-white transition-colors">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+            {['Home', 'Projects', 'About', 'Contact'].map(link => (
+              <a key={link} href="#" className="hover:text-cyan-400 transition-colors">
                 {link}
               </a>
             ))}
           </div>
           <a 
             href={`mailto:${config.email}`}
-            className="text-xs px-4 py-1.5 border border-orange-600 text-orange-400 rounded-full hover:bg-orange-600 hover:text-white transition"
+            className="text-xs font-mono px-4 py-2 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-lg hover:bg-cyan-400 hover:text-black font-semibold transition duration-200"
           >
-            Let's Talk →
+            Contact Me →
           </a>
         </nav>
       </header>
 
-      {/* 2. Hero Section */}
-      <section className="border-b border-gray-800/30 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-neutral-900 via-black to-black">
-        <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid md:grid-cols-2 items-center gap-12">
+      {/* 2. HERO SECTION */}
+      <section className="relative overflow-hidden border-b border-slate-800/80 py-16 lg:py-24 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(56,189,248,0.12),rgba(255,255,255,0))]">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           
-          {/* Hero Content (Left) */}
-          <div className="space-y-12">
-            <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-[1.1]">
-              From <span className="font-serif italic text-white/90">Sketch</span> to Scale &mdash; I Build the Web You <span className="text-white/95">Imagine</span>
-            </h1>
+          {/* Left Side Content (7 Columns) */}
+          <div className="lg:col-span-7 space-y-8 text-left">
             
-            <div className="flex items-center gap-8 border-t border-gray-800 pt-8">
-              <div className="text-center">
-                <div className="text-4xl font-extrabold text-orange-600">{config.hero.projectsCompleted}</div>
-                <div className="text-xs text-gray-500 uppercase tracking-widest mt-1">Projects Completed</div>
+            {/* Status & Titles */}
+            <div className="space-y-4">
+              <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-slate-800 text-xs text-slate-300 font-mono">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-400"></span>
+                </span>
+                {config.status}
               </div>
-              <div className="text-center border-l border-gray-800 pl-8">
-                <div className="text-4xl font-extrabold text-orange-600">{config.hero.yearsExperience}</div>
-                <div className="text-xs text-gray-500 uppercase tracking-widest mt-1">Years Of Experience</div>
+
+              <div className="space-y-2">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white font-sans leading-tight">
+                  {config.name}
+                </h1>
+                <AnimatedTitle text={config.title} />
               </div>
             </div>
 
-            {/* Sub-about with image and success rate */}
-            <div className="relative border border-orange-600/30 bg-black/40 p-6 rounded-2xl flex items-center gap-4 max-w-lg">
-              <img src="https://via.placeholder.com/48?text=👩‍💻" alt="Contributor" className="w-12 h-12 rounded-full border border-orange-600" />
-              <div>
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  {config.hero.aboutQuick}
-                </p>
-                <div className="flex gap-1.5 mt-2.5">
-                    {[1,2,3,4].map(i => <img key={i} src={`https://via.placeholder.com/20?text=${i}`} alt="avatar" className='w-5 h-5 rounded-full border border-gray-800' />)}
-                    <span className='text-xs text-orange-600 font-medium'>{config.hero.successRate}</span>
+            {/* Paragraph with Better Spacing & Line-Height */}
+            <p className="text-sm sm:text-base text-slate-400 leading-relaxed max-w-2xl">
+              {config.hero.aboutQuick} Specialist in building high-performance modern web platforms using <strong className="text-slate-200 font-medium">Laravel, React, Node.js</strong>, and <strong className="text-slate-200 font-medium">MySQL</strong>.
+            </p>
+
+            {/* Terminal Window Mockup */}
+            <div className="bg-[#0b0e17] border border-slate-800/90 rounded-2xl overflow-hidden shadow-2xl max-w-xl">
+              {/* <div className="bg-slate-900/80 px-4 py-2.5 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
                 </div>
+                <div className="text-xs font-mono text-slate-500">developer.json</div>
+                <div className="w-10"></div>
+              </div> */}
+
+              {/* <div className="p-4 font-mono text-xs leading-relaxed text-slate-300 overflow-x-auto">
+                <span className="text-purple-400">const</span> <span className="text-yellow-300">developer</span> <span className="text-cyan-400">=</span> &#123;<br />
+                &nbsp;&nbsp;<span className="text-cyan-300">name</span>: <span className="text-emerald-300">"{config.name}"</span>,<br />
+                &nbsp;&nbsp;<span className="text-cyan-300">role</span>: <span className="text-emerald-300">"{config.title}"</span>,<br />
+                &nbsp;&nbsp;<span className="text-cyan-300">coreStack</span>: [<span className="text-emerald-300">"React"</span>, <span className="text-emerald-300">"Laravel"</span>, <span className="text-emerald-300">"JavaScript"</span>, <span className="text-emerald-300">"MySQL"</span>]<br />
+                &#125;;
+              </div> */}
+
+              <div className="bg-slate-900/40 border-t border-slate-800/80 p-3 grid grid-cols-3 gap-3 text-center">
+                {config.hero.stats.map((stat, i) => (
+                  <div key={i} className="space-y-1">
+                    <div className="text-sm sm:text-base font-bold text-cyan-400 font-mono">{stat.value}</div>
+                    <div className="text-[10px] text-slate-500 uppercase tracking-wider">{stat.label}</div>
+                  </div>
+                ))}
               </div>
-               <div className="absolute top-0 right-0 w-8 h-8 bg-black border border-gray-700/50 rounded-bl-xl grid place-content-center text-xs font-mono text-gray-500">I</div>
             </div>
-            
-            <div className="flex gap-4">
-                <a href={config.github} target="_blank" rel="noreferrer" className="px-6 py-3 bg-orange-600 text-white rounded-xl text-sm font-semibold hover:bg-orange-700 transition">View GitHub →</a>
-                <a href={config.linkedin} target="_blank" rel="noreferrer" className="px-6 py-3 border border-gray-800 text-gray-300 rounded-xl text-sm font-semibold hover:border-gray-600 transition">LinkedIn Profile</a>
+
+            {/* Left-aligned Action Buttons at the Bottom */}
+            <div className="flex flex-wrap items-center justify-start gap-4 pt-2">
+              <a 
+                href={config.github} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-black font-bold rounded-xl text-xs sm:text-sm transition-all duration-200 shadow-lg shadow-cyan-500/20 flex items-center gap-2"
+              >
+                <span>GitHub Profile</span>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+              </a>
+              <a 
+                href={config.linkedin} 
+                target="_blank" 
+                rel="noreferrer" 
+                className="px-6 py-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-800 text-slate-300 font-medium rounded-xl text-xs sm:text-sm transition-all duration-200"
+              >
+                LinkedIn Profile
+              </a>
             </div>
 
           </div>
 
-          {/* Hero Image (Right) */}
-          <div className="relative group flex justify-end">
-            <img 
-              src={config.hero.image}
-              alt="Udari Lakshika"
-              className="w-full max-w-lg rounded-3xl object-cover"
-            />
+          {/* Right Side Image Box (5 Columns) */}
+          <div className="lg:col-span-5 flex justify-center lg:justify-end">
+            <div className="relative group w-full max-w-sm">
+              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/40 to-blue-600/40 rounded-3xl blur opacity-30 group-hover:opacity-70 transition duration-300"></div>
+              <div className="relative bg-slate-900 border border-slate-800 rounded-3xl p-3">
+                <img 
+                  src={config.hero.image}
+                  alt={config.name}
+                  className="w-full h-[360px] sm:h-[420px] object-cover rounded-2xl shadow-md"
+                />
+              </div>
+            </div>
           </div>
+
         </div>
       </section>
 
       {/* 3. About Me Section */}
-      <section className="border-b border-gray-800/30">
+      <section className="border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 grid md:grid-cols-2 items-center gap-16">
-          
-          {/* About Content (Left) */}
           <div className="space-y-6">
-            <span className="text-xs px-3 py-1 border border-orange-600 text-orange-600 rounded-full font-medium">About Me</span>
-            <h2 className="text-4xl font-extrabold tracking-tight uppercase leading-tight">
-              EVERYTHING ABOUT <br/> <span className="font-serif italic text-white/90 lowercase">{config.name}</span>
+            <span className="text-xs px-3 py-1 border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 rounded-full font-mono">About Me</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight uppercase leading-tight text-white">
+              BUILDING SCALABLE & MODERN WEB PLATFORMS
             </h2>
-            <div className="space-y-4 text-gray-400 text-base leading-relaxed">
+            <div className="space-y-4 text-slate-400 text-base leading-relaxed">
               {config.about.detailed.map((paragraph, index) => (
                 <p key={index} dangerouslySetInnerHTML={{ __html: paragraph.replace(/\*\*(.*?)\*\*/g, '<strong class="text-white font-medium">$1</strong>') }} />
               ))}
             </div>
-            <a href={config.github} target="_blank" rel="noreferrer" className="inline-block text-orange-600 text-sm font-medium hover:text-orange-500 transition">EXPLORE MY PROJECTS ON GITHUB →</a>
+            <a href={config.github} target="_blank" rel="noreferrer" className="inline-block text-cyan-400 text-sm font-semibold hover:text-cyan-300 transition">
+              EXPLORE MY PROJECTS ON GITHUB →
+            </a>
           </div>
 
-          {/* About Tech Skill Circle (Right) */}
           <div className="relative aspect-square flex items-center justify-center">
-            {/* Center Node */}
-            <div className="w-16 h-16 bg-black border border-orange-600 text-orange-600 rounded-full flex items-center justify-center text-xl font-bold font-mono">
+            <div className="w-16 h-16 bg-black border border-cyan-500 text-cyan-400 rounded-full flex items-center justify-center text-xl font-bold font-mono shadow-lg shadow-cyan-500/20">
               &lt;/&gt;
             </div>
-
-            {/* Orbiting Icons */}
             {[
               {icon: '⚛️', pos: 'top-0 left-1/4'},
               {icon: '🐘', pos: 'top-0 right-1/4'},
@@ -203,43 +285,36 @@ const PortfolioPage = () => {
               {icon: '🎨', pos: 'bottom-0 left-0'},
               {icon: 'JS', pos: 'bottom-1/4 right-0'},
             ].map((skill, index) => (
-              <div key={index} className={`absolute w-12 h-12 bg-black border border-gray-800/60 rounded-xl flex items-center justify-center text-lg ${skill.pos}`}>
+              <div key={index} className={`absolute w-12 h-12 bg-slate-900 border border-slate-800 rounded-xl flex items-center justify-center text-lg ${skill.pos}`}>
                 {skill.icon}
               </div>
             ))}
-
-            {/* Simplified orbit lines */}
-            <div className="absolute inset-10 border border-gray-900/50 rounded-full"></div>
-            <div className="absolute inset-20 border border-gray-900 rounded-full"></div>
-            <div className="absolute inset-[120px] border border-orange-950/40 rounded-full"></div>
+            <div className="absolute inset-10 border border-slate-800 rounded-full"></div>
+            <div className="absolute inset-20 border border-slate-800/60 rounded-full"></div>
+            <div className="absolute inset-[120px] border border-cyan-500/20 rounded-full"></div>
           </div>
         </div>
       </section>
 
       {/* 4. Tech Toolbox Section */}
-      <section className="bg-[linear-gradient(180deg,_#000_0%,_#120800_50%,_#000_100%)] border-b border-gray-800/30">
+      <section className="border-b border-slate-800/80 bg-slate-950/60">
         <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 text-center space-y-16">
           <div className='space-y-4'>
-              <span className="text-xs px-3 py-1 border border-orange-600 text-orange-600 rounded-full font-medium">Skills & Tech Stack</span>
-              <h2 className="text-4xl font-extrabold tracking-tight uppercase">MY TECH TOOLBOX</h2>
+              <span className="text-xs px-3 py-1 border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 rounded-full font-mono">Skills & Tech Stack</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight uppercase text-white">MY TECH TOOLBOX</h2>
           </div>
 
-          {/* Grid of Tech Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {config.techToolbox.cards.map((card, index) => (
-              <div key={card.id} className={`p-8 border border-gray-800/30 rounded-3xl space-y-6 text-left transition ${index % 2 === 0 ? 'bg-neutral-950/70 hover:border-gray-700/50' : 'bg-neutral-950 hover:border-orange-900/50'}`}>
-                
-                {/* Tech Icons Row */}
+            {config.techToolbox.cards.map((card) => (
+              <div key={card.id} className="p-8 border border-slate-800 bg-slate-900/50 rounded-2xl space-y-6 text-left transition hover:border-cyan-500/40">
                 <div className="flex items-center gap-2">
-                    {card.icons.map(icon => <div key={icon} className="w-10 h-10 bg-black border border-gray-800 rounded-lg flex items-center justify-center text-sm font-bold font-mono text-gray-400">{icon}</div>)}
+                    {card.icons.map(icon => <div key={icon} className="w-10 h-10 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-center text-sm font-bold font-mono text-slate-400">{icon}</div>)}
                 </div>
-
                 <div className='space-y-2'>
-                    <h3 className="text-xl font-bold text-orange-600">{card.title}</h3>
-                    <p className="text-sm text-gray-300 font-mono leading-relaxed">{card.skills}</p>
+                    <h3 className="text-xl font-bold text-cyan-400">{card.title}</h3>
+                    <p className="text-sm text-slate-300 font-mono leading-relaxed">{card.skills}</p>
                 </div>
-                
-                <p className="text-xs text-gray-500 leading-relaxed font-serif italic">{card.description}</p>
+                <p className="text-xs text-slate-400 leading-relaxed">{card.description}</p>
               </div>
             ))}
           </div>
@@ -247,55 +322,54 @@ const PortfolioPage = () => {
       </section>
 
       {/* 5. Featured Projects Section */}
-      <section className="border-b border-gray-800/30 bg-black">
+      <section className="border-b border-slate-800/80 bg-black">
         <div className="max-w-7xl mx-auto px-6 py-20 md:py-28 space-y-16">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div className="space-y-4">
-              <span className="text-xs px-3 py-1 border border-orange-600 text-orange-600 rounded-full font-medium">Portfolio Showcase</span>
-              <h2 className="text-4xl font-extrabold tracking-tight uppercase">FEATURED PROJECTS</h2>
+              <span className="text-xs px-3 py-1 border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 rounded-full font-mono">Portfolio Showcase</span>
+              <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight uppercase text-white">FEATURED PROJECTS</h2>
             </div>
             <a 
               href={config.github} 
               target="_blank" 
               rel="noreferrer" 
-              className="text-xs px-5 py-2.5 border border-gray-800 text-gray-300 rounded-full hover:border-orange-600 hover:text-orange-500 transition w-fit"
+              className="text-xs px-5 py-2.5 border border-slate-800 text-slate-300 rounded-lg hover:border-cyan-500 hover:text-cyan-400 transition w-fit font-mono"
             >
               See All On GitHub →
             </a>
           </div>
 
-          {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {config.projects.map((project) => (
               <div 
                 key={project.id} 
-                className="group border border-gray-800/40 bg-neutral-950 rounded-3xl p-8 flex flex-col justify-between hover:border-orange-600/50 transition duration-300"
+                className="group border border-slate-800 bg-slate-900/40 rounded-2xl p-8 flex flex-col justify-between hover:border-cyan-500/50 transition duration-300"
               >
                 <div className="space-y-6">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-mono text-orange-500 bg-orange-950/40 border border-orange-900/40 px-3 py-1 rounded-full">
+                    <span className="text-xs font-mono text-cyan-400 bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded-md">
                       {project.tag}
                     </span>
-                    <span className="text-xs text-gray-500 font-mono">{project.category}</span>
+                    <span className="text-xs text-slate-500 font-mono">{project.category}</span>
                   </div>
 
                   <div className="space-y-2">
-                    <h3 className="text-2xl font-bold text-white group-hover:text-orange-500 transition">
+                    <h3 className="text-xl font-bold text-white group-hover:text-cyan-400 transition">
                       {project.title}
                     </h3>
-                    <p className="text-xs font-mono text-gray-400">
+                    <p className="text-xs font-mono text-slate-400">
                       {project.tech}
                     </p>
                   </div>
 
-                  <p className="text-sm text-gray-400 leading-relaxed">
+                  <p className="text-sm text-slate-400 leading-relaxed">
                     {project.description}
                   </p>
                 </div>
 
-                <div className="pt-8 mt-6 border-t border-gray-900 flex items-center justify-between text-xs text-gray-400 group-hover:text-white transition">
+                <div className="pt-8 mt-6 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 group-hover:text-white transition">
                   <span>View Details</span>
-                  <span className="text-orange-500 text-lg">→</span>
+                  <span className="text-cyan-400 text-lg">→</span>
                 </div>
               </div>
             ))}
@@ -304,14 +378,14 @@ const PortfolioPage = () => {
       </section>
 
       {/* 6. Footer */}
-      <footer className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-600">
+      <footer className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-mono">
           <div>&copy; {new Date().getFullYear()} {config.name}. All Rights Reserved.</div>
-          <div className="flex gap-4 text-gray-400">
-            <a href={`mailto:${config.email}`} className="hover:text-orange-500 transition">{config.email}</a>
+          <div className="flex gap-4 text-slate-400">
+            <a href={`mailto:${config.email}`} className="hover:text-cyan-400 transition">{config.email}</a>
             <span>•</span>
-            <a href={config.linkedin} target="_blank" rel="noreferrer" className="hover:text-orange-500 transition">LinkedIn</a>
+            <a href={config.linkedin} target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition">LinkedIn</a>
             <span>•</span>
-            <a href={config.github} target="_blank" rel="noreferrer" className="hover:text-orange-500 transition">GitHub</a>
+            <a href={config.github} target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition">GitHub</a>
           </div>
       </footer>
 
